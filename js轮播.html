@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>轮播</title>
+  <style>
+     * {
+            margin:0;
+            padding:0;
+        }
+        a{
+            text-decoration: none;
+        }
+    .container {
+      position: relative;
+      width: 600px;
+      height: 400px;
+      overflow: hidden;
+      margin: 100px auto 100px auto;
+    }
+    .wrap {
+      width: 4200px;
+      height: 400px;
+      position: absolute;
+    }
+    .container .wrap img {
+      width: 600px;
+      height: 400px;
+      float: left;
+    }
+    .button {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 200px;
+      height: 40px;
+      text-align: center;
+
+    }
+    .button span {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .container .arrow_left {
+      position: absolute;
+      left: 20px;
+      display: block;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      margin-top: -10px;
+      background: #fff;
+    }
+    .container .arrow_right {
+      position: absolute;
+      right: 20px;
+      display: block;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      margin-top: -10px;
+      background: #fff;
+
+    }
+
+
+   
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="wrap" style="left:-600px">
+      <img src="http://sc.jb51.net/uploads/allimg/130112/2-1301122130215H.jpg" alt="5">
+      <img src="http://pic.netbian.com/uploads/allimg/190614/213132-1560519092a8b4.jpg" alt="1">
+      <img src="http://pic.netbian.com/uploads/allimg/160926/160017-14748768171147.jpg" alt="2">
+      <img src="http://h.hiphotos.baidu.com/lvpics/w=600/sign=6570942cbf12c8fcb4f3f5cdcc0292b4/d01373f082025aafb3f498c7fdedab64024f1af3.jpg" alt="3">
+      <img src="http://f.hiphotos.baidu.com/lvpics/w=600/sign=4351b6aa8694a4c20a23e42b3ef51bac/024f78f0f736afc3ece868c0b219ebc4b64512aa.jpg" alt="4">
+      <img src="http://sc.jb51.net/uploads/allimg/130112/2-1301122130215H.jpg" alt="5">
+      <img src="http://pic.netbian.com/uploads/allimg/190614/213132-1560519092a8b4.jpg" alt="1">
+    </div>
+    <div class="button">
+      <span>1</span>
+      <span>2</span>
+      <span>3</span>
+      <span>4</span>
+      <span>5</span>
+    </div>
+    <a href="javascript:;" class="arrow arrow_left">&lt;</a>
+    <a href="javascript:;" class="arrow arrow_right">&gt;</a>
+  </div>
+</body>
+
+<script>
+  let container = document.querySelector('.container')
+  let wrap = document.querySelector('.wrap')
+  let arrow_left = document.querySelector('.arrow_left')
+  let arrow_right = document.querySelector('.arrow_right')
+
+  arrow_left.addEventListener('click',prevPic)
+  arrow_right.addEventListener('click',nextPic)
+  function prevPic(){
+    if (wrap.style.left === '0px'){
+      wrap.style.left = '-2400px'
+    }else{
+      wrap.style.left = `${parseInt(wrap.style.left) + 600}px`
+    }
+  } 
+
+  function nextPic(){
+    if (wrap.style.left == '-3600px'){
+      wrap.style.left = '-1200px'
+    }else{
+      wrap.style.left = `${parseInt(wrap.style.left) - 600}px`
+
+    }
+  }
+
+  var timer = null
+  timer = setInterval(()=>{
+    nextPic()
+  },1000)
+
+  container.addEventListener('mouseenter',()=>{
+    clearInterval(timer)
+  })
+  container.addEventListener('mouseleave',()=>{
+    timer = setInterval(()=>{
+    nextPic()
+  },1000)
+  })
+
+  
+</script>
+</html>

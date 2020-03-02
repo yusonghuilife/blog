@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>autocomplete</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+    </style>
+</head>
+<body>
+    <!-- 请在index.js文件中完成练习    -->
+    <input type="text">
+    <input type="text">
+    <ul class="autocomplete">
+    </ul>
+    <!-- 引入jQuery-->
+    <!-- <script src="https://7.url.cn/edu/jslib/jquery/1.9.1/jquery.min.js"></script> -->
+</body>
+<script>
+  let data = ['apple', 'banana', 'carambola', 'grape', 'lemon', 'orange', 'watermelon'];
+  let autocomplete = document.querySelector('.autocomplete')
+  let input = document.querySelectorAll('input[type="text"]')
+  let val 
+  let target
+  input.forEach( element => {
+    element.addEventListener('focus',function () {
+      autocomplete.style.position = 'absolute'
+      autocomplete.style.top = `${element.getBoundingClientRect().bottom}px`
+      autocomplete.style.left = `${element.getBoundingClientRect().left}px`
+      // console.log(element.getBoundingClientRect())
+      autocomplete.style.background = "grey"
+      target = element
+      if (element.value === ''){
+        autocomplete.innerHTML = ''
+      }else {
+        autocomplete.innerHTML = getHint(val)
+      }
+
+    })
+    element.addEventListener('keyup',function () {
+      val = element.value
+      autocomplete.innerHTML = getHint(val)
+    })
+
+
+  });
+
+
+  function getHint(val) {
+    if (val === '') return ''
+    let res = []
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index];
+      if (element.indexOf(val) === -1){
+        continue
+      }else {
+        let arr = element.split(`${val}`)
+        // console.log(arr)
+        let str = arr[0].concat(`<span style="color:red">${val}</span>`,arr[1])
+        res.push(`<li>${str}</li>`)
+      }
+    }
+    return res.join(" ")
+  }
+
+  autocomplete.addEventListener('click',function(e){
+    target.value = e.target.innerText
+    autocomplete.innerHTML = getHint(target.value)
+  })
+</script>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <div id="box"></div>
+</head>
+<body>
+  
+</body>
+<script>
+  var dragging = false
+  var x, y ,boxX, boxY
+  var box = document.getElementById('box')
+  box.style.width = '100px'
+  box.style.height = '100px'
+  box.style.background = 'red'
+  box.style.position = 'absolute'
+  box.addEventListener('mousedown',down)
+  document.addEventListener('mousemove',move)
+  document.addEventListener('mouseup',up)
+
+  function down(e){
+    dragging = true
+    // console.log(e.offsetLeft)
+    boxX = e.clientX - box.offsetLeft
+    boxY = e.clientY - box.offsetTop
+    x = e.clientX
+    y = e.clientY
+  }
+
+  function move(e){
+    if (dragging) {
+      box.style.left = `${e.clientX - boxX}px`
+      box.style.top = `${e.clientY - boxY}px`
+      // box.style.transform = `translate(${e.clientX - x  }px,${e.clientY - y }px)`
+
+    }
+  }
+
+  function up(e){
+    dragging = false
+
+    
+  }
+</script>
+
+<!-- <script>
+class Dialog{
+  constructor(){
+    this.lastX = 0
+    this.lastY = 0
+    this.x
+    this.y
+    this.text = text || ''
+    this.isMoving = false
+    this.dialog
+  }
+  open() {
+    const ele = document.createElement('div')
+    ele.id = 'drag'
+    ele.style = `
+      position:absolute;
+      top:0;
+      left:0;
+      bottom:0;
+      right:0;
+
+      background-color:rgba(0,0,0,.3);
+
+      display:flex;
+      justify-content: center;
+      align-items: center;
+    `
+    document.body.appendChild(ele)
+    this.dialog = document.createElement('div')
+    this.dialog.style = `
+        padding:20px;
+        background-color:white
+    `
+    this.dialog.innerText = this.text
+
+
+  }
+
+  
+}
+
+</script> -->
+</html>
