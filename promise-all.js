@@ -12,12 +12,10 @@ Promise.all = function(arr){
       )
     })
   })
-  
 }
 
 
 // test
-
 let promise1 = new Promise((resolve, reject) => {
   setTimeout(() => {
     resolve('定时器1')

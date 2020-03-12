@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>bounce</title>
+  <style>
+    body {
+      height: 300px;
+      background: rgba(255,255,255,.1);
+    }
+    .bot {
+      position: absolute;
+      bottom: 0;
+      width: 1000px;
+      height: 200px;
+      text-align: center;
+      transform: translateY(200px);
+      background: darkkhaki;
+    }
+  </style>
+</head>
+<body>
+  <div class="bot">
+    bounce
+  </div>
+
+</body>
+<script>
+  const body = document.querySelector('body')
+  const modal = document.querySelector('.bot')
+
+  body.addEventListener('click', function(){
+    modal.style.transform = 'translateY(0)'
+    modal.style.transition = 'transform 1s ease'
+  })
+
+</script>
+
+</html>

@@ -6,6 +6,9 @@ add(1)(2, 3);   // 6
 add(1, 2)(3);   // 6
 add(1, 2, 3);   // 6
 
+
+
+
 function add(...arg1){
   let args = [...arg1]
   function fn(...arg2){

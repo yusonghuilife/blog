@@ -1,6 +1,6 @@
 function ajax (options) {
   // 请求地址
-  const url = options.url
+  let url = options.url
   // 请求方法
   const method = options.method.toLocaleLowerCase() || 'get'
   // 默认为异步true
@@ -18,9 +18,9 @@ function ajax (options) {
     xhr.ontimeout = () => reject && reject('请求超时')
     // 监听状态变化回调
     xhr.onreadystatechange = () => {
-      if (xhr.readyState == 4) {
+      if (xhr.readyState === 4) {
         // 200-300 之间表示请求成功，304资源未变，取缓存
-        if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+        if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
           resolve && resolve(xhr.responseText)
         } else {
           reject && reject()
