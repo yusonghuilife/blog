@@ -18,5 +18,4 @@ const quickSort = (arr, first, end) => {
   [arr[first], arr[i]] = [arr[i], arr[first]]
   quickSort(arr, first, i - 1)
   quickSort(arr, i + 1, end)
-
 }

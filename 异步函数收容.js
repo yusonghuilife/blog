@@ -23,7 +23,6 @@ class AsyncCollection{
 }
 
 function request(queue,n) {
-  // let count = 0;
   const handler = () => {
     if(queue.length) {
       queue.unshift()

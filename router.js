@@ -1,6 +1,6 @@
 export class Router{
   constructor(){
-    this.routes = []
+    this.routes = {}
     this.currentHash = window.location.hash
     window.addEventListener('hashchange',this.refreshPage)
   }

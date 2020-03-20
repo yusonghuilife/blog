@@ -1,6 +1,6 @@
 
 function FindPath(root, expectNumber){
-  const temp = []
+  const stack = []
   const result = []
   find(root, 0);
   return result;
@@ -9,10 +9,10 @@ function FindPath(root, expectNumber){
     if(!root){
       return;
     }
-    temp.push(root.value);
+    stack.push(root.value);
     sum += root.value;
     if(!root.left && !root.right && sum === expectNumber){
-      result.push(temp.concat());
+      result.push(stack.concat());
     }
     if(root.left){
       find(root.left, sum);
@@ -20,7 +20,7 @@ function FindPath(root, expectNumber){
     if(root.right){
       find(root.right, sum);
     }
-    temp.pop();  // 注意pop的时机，一个find对应一个pop，完美
+    stack.pop();  // 注意pop的时机，一个find对应一个pop，完美
 
     return ;
   }
