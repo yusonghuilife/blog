@@ -1,9 +1,9 @@
 // node节点递归版本
-function deepFirstSearch (root, nodeList){
+function deepFirstSearch(root, nodeList) {
   if (root) {
-    nodeList.push(node);
+    nodeList.push(node)
     for (let i = 0; i < root.children.length; i++) {
-      deepFirstSearch(root.children[i],nodeList)
+      deepFirstSearch(root.children[i], nodeList)
     }
   }
   return nodeList
@@ -11,9 +11,9 @@ function deepFirstSearch (root, nodeList){
 
 // node节点非递归版本
 
-function deepFirstSearch (root) {
+function deepFirstSearch(root) {
   const res = []
-  if (root !== null){
+  if (root !== null) {
     let stack = []
     stack.push(root)
     while (stack.length !== 0) {
@@ -28,10 +28,10 @@ function deepFirstSearch (root) {
 }
 
 // 树递归版本
-function deepFirstSearch (root,res) {
+function deepFirstSearch(root, res) {
   if (!root) return res
-  deepFirstSearch(root.left,res)
-  deepFirstSearch(root.right,res)
+  deepFirstSearch(root.left, res)
+  deepFirstSearch(root.right, res)
   return res
 }
 
