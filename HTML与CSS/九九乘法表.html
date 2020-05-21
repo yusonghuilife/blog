@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>multiple</title>
+    <style>
+      /* 2.设置背后盒子大小 居中 */
+      span {
+        width: 80px;
+        height: 40px;
+        border: 1px solid black;
+        line-height: 40px;
+        text-align: center;
+        display: inline-block;
+        /* 边框重合 需要设置 */
+        margin-left: -1px;
+        margin-top: -1px;
+      }
+      div {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <body id="app"></body>
+    <script>
+      // 3.window加载
+      window.onload = function () {
+        // 4.获取元素信息
+        var oDiv = document.getElementById('app')
+
+        // 5.创建变量
+        var sStr = ''
+        var tmp = ''
+        // 6 遍历 循环 拼接
+        for (var i = 1; i < 10; i++) {
+          for (var j = 1; j < i; j++) {
+            tmp += '<span>' + j + '×' + i + '=' + j * i + '</span>'
+          }
+          sStr += '<div>' + tmp + '</div>'
+          tmp = ''
+        }
+
+        // 7.遍历 循环之外 改变盒子内部内容
+        oDiv.innerHTML = sStr
+      }
+    </script>
+  </body>
+</html>

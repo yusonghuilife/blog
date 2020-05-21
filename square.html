@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>CSS实现自适应正方形</title>
@@ -7,12 +8,14 @@
         /*使用padding-bottom实现正方形*/
         #test7 {
             width: 400px;
+            height: 400px;
         }
 
         .placeholder {
             width: 30%;
-            padding-bottom: 30%; /* padding百分比相对父元素宽度计算,用padding去填充height*/
-            height: 0; /*避免被内容撑开多余的高度 */
+            /* padding-bottom: 30%; padding百分比相对父元素宽度计算,用padding去填充height */
+            height: 30%;
+            /*避免被内容撑开多余的高度 */
             background: #4acfff;
         }
 
@@ -24,19 +27,21 @@
     </style>
 
 </head>
+
 <body>
-<!-- 使用padding-bottom实现正方形 -->
-<!--
+    <!-- 使用padding-bottom实现正方形 -->
+    <!--
     padding百分比相对父元素宽度计算,用padding去填充height
  -->
-<div id="test7">
-    <div class="placeholder">使用padding-bottom实现正方形</div>
-</div>
+    <div id="test7">
+        <div class="placeholder">使用padding-bottom实现正方形</div>
+    </div>
 
-<!-- 使用css3单位vw -->
-<!--
+    <!-- 使用css3单位vw -->
+    <!--
     原理同padding，也是利用了vw是相对宽度，不过要注意是相对视窗宽度哦
  -->
-<div class="vw">使用vw配合width实现正方形</div>
+    <div class="vw">使用vw配合width实现正方形</div>
 </body>
+
 </html>

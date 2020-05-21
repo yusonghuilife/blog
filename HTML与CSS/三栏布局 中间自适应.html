@@ -1,103 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Css</title>
-</head>
-<body>
-
-<!--1 2 3-->
+  <head>
+    <meta charset="UTF-8" />
+    <title>Css</title>
+  </head>
+  <body>
+    <!--1 2 3-->
     <div class="left">左侧</div>
     <div class="right">右侧</div>
     <div class="middle">中间</div>
 
-<!--4-->
-  <div class="content">
-    <div class="main">main</div>
-  </div>
-  <div class="left">left</div>
-  <div class="right">right</div>
+    <!--4-->
+    <div class="content">
+      <div class="main">main</div>
+    </div>
+    <div class="left">left</div>
+    <div class="right">right</div>
 
-<!--5-->
-  <div class="container">
-    <ul>
-      <li>子元素1</li>
-      <li>子元素2</li>
-      <li>子元素3</li>
-      <li>子元素4</li>
-      <li>子元素5</li>
-      <li>子元素6</li>
-      <li>子元素7</li>
-      <li>子元素8</li>
-    </ul>
-  </div>
-<!--6-->
-  <div class="container">
-    <div class="main"></div>
-    <div class="left"></div>
-    <div class="right"></div>
-  </div>
-</body>
-<style>
-  /*实现1 float左右定宽加上margin布局*/
-  .left {width: 200px; height: 50px; float: left; background: coral;}
-  .right {width: 120px; height: 50px; float: right; background: lightblue;}
-  .middle {margin-left: 220px; height: 50px; background: lightpink; margin-right: 140px;}
+    <!--5-->
+    <div class="container">
+      <ul>
+        <li>子元素1</li>
+        <li>子元素2</li>
+        <li>子元素3</li>
+        <li>子元素4</li>
+        <li>子元素5</li>
+        <li>子元素6</li>
+        <li>子元素7</li>
+        <li>子元素8</li>
+      </ul>
+    </div>
+    <!--6-->
+    <div class="container">
+      <div class="main"></div>
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
+  </body>
+  <style>
+    /*实现1 float左右定宽加上margin布局*/
+    .left {
+      width: 200px;
+      height: 50px;
+      float: left;
+      background: coral;
+    }
+    .right {
+      width: 120px;
+      height: 50px;
+      float: right;
+      background: lightblue;
+    }
+    .middle {
+      margin-left: 220px;
+      height: 50px;
+      background: lightpink;
+      margin-right: 140px;
+    }
 
+    /*实现2 absolute左右定宽加上margin布局*/
+    .left {
+      width: 200px;
+      height: 100px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: coral;
+    }
+    .right {
+      width: 120px;
+      height: 100px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: lightblue;
+    }
+    .middle {
+      height: 50px;
+      margin: 0 140px 0 220px;
+      background: #555;
+    }
 
-  /*实现2 absolute左右定宽加上margin布局*/
-  .left {width: 200px; height: 100px; position: absolute; top: 0; left: 0; background: coral;}
-  .right {width: 120px; height: 100px; position: absolute; top:0; right: 0; background: lightblue;}
-  .middle {height: 50px; margin: 0 140px 0 220px; background: #555;}
+    /*实现3 float左右不定宽 利用overflow中间形成BFC 不与浮动重合*/
+    .left {
+      height: 50px;
+      float: left;
+      background: coral;
+    }
+    .right {
+      height: 50px;
+      float: right;
+      background: lightblue;
+    }
+    .middle {
+      height: 50px;
+      background: lightpink;
+      overflow: hidden;
+    }
 
+    /*实现4 利用margin为负属性，让本该在后面的元素，移动到前面去*/
+    .content {
+      float: left;
+      width: 100%;
+    }
+    .main {
+      height: 200px;
+      margin-left: 110px;
+      margin-right: 220px;
+      background-color: green;
+    }
+    .left {
+      float: left;
+      height: 200px;
+      width: 100px;
+      margin-left: -100%;
+      background-color: red;
+    }
+    /*浮动元素基准线在第一行最左边-即前一个浮动元素后*/
+    .right {
+      width: 200px;
+      height: 200px;
+      float: right;
+      margin-left: -200px;
+      background-color: blue;
+    }
+    /*浮动元素基准线在第一行最左边*/
 
-  /*实现3 float左右不定宽 利用overflow中间形成BFC 不与浮动重合*/
-  .left { height: 50px; float: left; background: coral;}
-  .right { height: 50px; float: right; background: lightblue;}
-  .middle { height: 50px; background: lightpink; overflow: hidden}
+    /* demo 5 */
+    body,
+    ul,
+    li {
+      padding: 0;
+      margin: 0;
+    }
+    ul,
+    li {
+      list-style: none;
+    }
+    .container {
+      height: 210px;
+      width: 460px;
+      border: 5px solid #000;
+    }
+    ul {
+      height: 210px;
+      overflow: hidden;
+      margin-right: -20px;
+    } /*一个负的margin-right,相当于把ul的宽度增加了20px*/
+    li {
+      height: 100px;
+      width: 100px;
+      background: #09f;
+      float: left;
+      margin-right: 20px;
+      margin-bottom: 10px;
+    }
 
-  /*实现4 利用margin为负属性，让本该在后面的元素，移动到前面去*/
-  .content { float: left; width: 100%;}
-  .main { height: 200px; margin-left: 110px; margin-right: 220px; background-color: green; }
-  .left { float: left; height: 200px; width: 100px; margin-left: -100%; background-color: red;} /*浮动元素基准线在第一行最左边-即前一个浮动元素后*/
-  .right { width: 200px; height: 200px; float: right; margin-left: -200px; background-color: blue;} /*浮动元素基准线在第一行最左边*/
-
-  /* demo 5 */
-  body,ul,li{ padding:0; margin:0;}
-  ul,li{ list-style:none;}
-  .container{ height:210px; width:460px; border:5px solid #000;}
-  ul{ height:210px; overflow:hidden; margin-right:-20px;} /*一个负的margin-right,相当于把ul的宽度增加了20px*/
-  li{ height:100px; width:100px; background:#09F; float:left; margin-right:20px; margin-bottom:10px;}
-
-  /*实现6 同4，只是父元素有margin，所以自元素要加上relative并移动 */
-  .container {
-    margin-left: 120px;
-    margin-right: 220px;
-    border: 5px solid black;
-  }
-  .main {
-    float: left;
-    width: 100%;
-    height: 300px;
-    background-color: red;
-  }
-  .left {
-    float: left;
-    width: 100px;
-    height: 300px;
-    margin-left: -100%;
-    position: relative;
-    left: -120px;
-    background-color: blue;
-  }
-  .right {
-    float: right;
-    width: 200px;
-    height: 300px;
-    margin-left: -200px;
-    position: relative;
-    left: 220px;
-    background-color: green;
-  }
-</style>
+    /*实现6 同4，只是父元素有margin，所以自元素要加上relative并移动 */
+    .container {
+      margin-left: 120px;
+      margin-right: 220px;
+      border: 5px solid black;
+    }
+    .main {
+      float: left;
+      width: 100%;
+      height: 300px;
+      background-color: red;
+    }
+    .left {
+      float: left;
+      width: 100px;
+      height: 300px;
+      margin-left: -100%;
+      position: relative;
+      left: -120px;
+      background-color: blue;
+    }
+    .right {
+      float: right;
+      width: 200px;
+      height: 300px;
+      margin-left: -200px;
+      position: relative;
+      left: 220px;
+      background-color: green;
+    }
+  </style>
 </html>

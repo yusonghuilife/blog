@@ -7,12 +7,13 @@ function coinChange(coins, amount) {
     if (coin === 0) return 0
     if (coin < 0) return -1
     if (memo.has(coin)) return memo.get(coin)
-    res = amount + 1
+    let res = amount + 1
     for (let i of coins) {
-      if (dp(coin - i) === -1) continue
-      res = Math.min(res, 1 + dp(coin - i))
+      if (dp(coin - i, memo) === -1) continue
+      res = Math.min(res, 1 + dp(coin - i, memo))
     }
     if (res !== amount + 1) memo.set(coins, res)
+    return res
   }
   return dp(amount, memo)
 }

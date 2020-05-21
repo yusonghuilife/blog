@@ -21,7 +21,6 @@ const reverseList = function (head) {
     cur.next = pre
     pre = cur
     cur = tmp
-    console.log("pre", pre, "cur", cur)
   }
   return pre
 }

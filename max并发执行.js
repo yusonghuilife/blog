@@ -1,11 +1,20 @@
 // 1. 一次并发n个任务
 function request(queue, n) {
+  let tasks = queue.slice()
+  let res = []
   const handler = () => {
-    if (queue.length) {
-      queue
-        .unshift()
-        .then(() => {
-          handler()
+    if (tasks.length) {
+      let task = tasks.shift()
+      task()
+        .then((e) => {
+          // console.log(queue.indexOf(task))
+          res[queue.indexOf(task)] = e
+          console.log(res)
+          if (res.length === queue.length) {
+            return res
+          } else {
+            handler()
+          }
         })
         .catch((e) => {
           throw new Error(e)
@@ -20,27 +29,29 @@ function request(queue, n) {
 let a = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("task1")
-      resolve()
-    }, 1000)
+      console.log('task1')
+      resolve('task1')
+    }, 5000)
   })
 }
 let b = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("task2")
-      resolve()
-    }, 1000)
+      console.log('task2')
+      resolve('task2')
+    }, 3000)
   })
 }
 let c = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("task3")
-      resolve()
-    }, 1000)
+      console.log('task3')
+      resolve('task3')
+    }, 2000)
   })
 }
+
+console.log(request([a, b, c], 2))
 
 // 2. 实现一个mergePromise函数，把传进去的数组按顺序先后执行，并且把返回的数据先后放到数组data中
 const timeout = (ms) =>
@@ -52,24 +63,24 @@ const timeout = (ms) =>
 
 const ajax1 = () =>
   timeout(2000).then(() => {
-    console.log("1")
+    console.log('1')
     return 1
   })
 
 const ajax2 = () =>
   timeout(1000).then(() => {
-    console.log("2")
+    console.log('2')
     return 2
   })
 
 const ajax3 = () =>
   timeout(2000).then(() => {
-    console.log("3")
+    console.log('3')
     return 3
   })
 
 mergePromise([ajax1, ajax2, ajax3]).then((data) => {
-  console.log("done")
+  console.log('done')
   console.log(data) // data 为 [1, 2, 3]
 })
 // 要求分别输出
@@ -127,13 +138,5 @@ function asyncPool(poolLimit, array, iteratorFn) {
     }
     return r.then(() => enqueue())
   }
-
   return enqueue().then(() => Promise.all(ret))
 }
-
-const delay = (time, cb) =>
-  new Promise(() => {
-    setTimeout(() => {
-      resolve(cb())
-    }, time)
-  })

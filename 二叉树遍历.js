@@ -18,7 +18,7 @@ function inOrder(node) {
       stack.push(node)
       node = node.left
     }
-    if (stack.length === 0) break;
+    if (stack.length === 0) break
     const tmp = stack.pop()
     console.log(tmp) // 打印
     node = tmp.right
@@ -26,30 +26,30 @@ function inOrder(node) {
 }
 
 // 简略版
-function posOrder(node) {
-  const stack = [node]
-  const res = []
-  while (stack.length !== 0) {
-    const tmp = stack.pop()
-    res.push(tmp)
-    if (tmp.left) stack.push(tmp.left)
-    if (tmp.right) stack.push(tmp.right)
-  }
-  return res.reverse().toString()
-}
+// function posOrder(node) {
+//   const stack = [node]
+//   const res = []
+//   while (stack.length !== 0) {
+//     const tmp = stack.pop()
+//     res.push(tmp)
+//     if (tmp.left) stack.push(tmp.left)
+//     if (tmp.right) stack.push(tmp.right)
+//   }
+//   return res.reverse().toString()
+// }
 
 function posOrder(node) {
-  if (!node) return ''
+  if (!node) return ""
   const stack = [node]
   while (stack.length !== 0) {
     const tmp = stack[stack.length - 1]
     if (tmp.left && node !== tmp.left && node !== tmp.right) {
       stack.push(tmp.left)
-    } else if(tmp.right && node !== tmp.right) {
+    } else if (tmp.right && node !== tmp.right) {
       stack.push(tmp.right)
     } else {
       console.log(stack.pop())
-      node = tmp   // 防止回溯重复
+      node = tmp // 防止回溯重复
     }
   }
 }

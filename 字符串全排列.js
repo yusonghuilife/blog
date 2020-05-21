@@ -1,5 +1,7 @@
 // 输入：s = "abc"
 // 输出：["abc","acb","bac","bca","cab","cba"]
+
+// 方法1
 var permutation = function (s) {
   let vis = []
   let res = []
@@ -21,3 +23,30 @@ var permutation = function (s) {
   dfs(0, "")
   return res
 }
+
+// 方法2
+function Permutation(str) {
+  const result = []
+  if (str) {
+    queue = str.split("")
+    PermutationCore(queue, result)
+  }
+  result.sort()
+  return [...new Set(result)]
+}
+
+function PermutationCore(queue, result, temp = "", current = "") {
+  current += temp
+  if (queue.length === 0) {
+    result.push(current)
+    return
+  }
+  for (let i = 0; i < queue.length; i++) {
+    temp = queue.shift()
+    PermutationCore(queue, result, temp, current)
+    queue.push(temp)
+    console.log(queue)
+  }
+}
+
+Permutation("abc")

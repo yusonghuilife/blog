@@ -69,9 +69,9 @@
                 let xhr = new XMLHttpRequest();
                 xhr.open("GET", url, true);
                 xhr.onload = function(){
-                    if(xhr.status == 200 || xhr.status == 304){
+                    if(xhr.status === 200 || xhr.status === 304){
                         resolve(JSON.parse(xhr.responseText))
-                    }else if(xhr.status == 404){
+                    }else if(xhr.status === 404){
                         //因为此处代码是异步的，所以不能直接throw错误，得需要reject
                         reject(new HttpError('用户不存在'))
                     }

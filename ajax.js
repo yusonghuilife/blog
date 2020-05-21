@@ -14,7 +14,8 @@ function ajax (options) {
     xhr.timeout = options.timeout
   }
   // 返回一个Promise实例
-  return new Promise ((resolve, reject) => {
+  let res = new Promise ((resolve, reject) => {
+
     xhr.ontimeout = () => reject && reject('请求超时')
     // 监听状态变化回调
     xhr.onreadystatechange = () => {
@@ -58,4 +59,6 @@ function ajax (options) {
       xhr.send(encodeData)
     }
   })
+
+  return res
 }
