@@ -1,3 +1,12 @@
+/*
+ * @Author: yusonghu
+ * @Date: 2020-05-20 17:21:26
+ * @LastEditTime: 2020-05-24 16:30:04
+ * @LastEditors: yusonghu
+ * @Description:
+ * @FilePath: /blog/bitmap.js
+ */
+
 const BitMap = function () {
   this.data = []
 }
@@ -11,7 +20,7 @@ BitMap.prototype.add = function (num) {
   const pos = this.getPos(num)
 
   if (this.data[index] === undefined) this.data[index] = 0
-  this.data[index] |= Math.pow(2, pos)
+  this.data[index] = Math.pow(2, pos)
 }
 
 BitMap.prototype.exist = function (num) {

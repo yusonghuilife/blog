@@ -1,3 +1,12 @@
+/*
+ * @Author: yusonghu
+ * @Date: 2020-05-23 13:59:56
+ * @LastEditTime: 2020-05-24 15:17:07
+ * @LastEditors: yusonghu
+ * @Description: tok问题
+ * @FilePath: /blog/topK快排.js
+ */
+
 const getLeastNumbers = (arr, k) => {
   if (k <= 0) {
     return []

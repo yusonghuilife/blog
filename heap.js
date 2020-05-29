@@ -1,3 +1,12 @@
+/*
+ * @Author: yusonghu
+ * @Date: 2020-04-11 20:23:34
+ * @LastEditTime: 2020-05-24 16:31:35
+ * @LastEditors: yusonghu
+ * @Description:
+ * @FilePath: /blog/heap.js
+ */
+
 class Heap {
   constructor(array = []) {
     this.array = array
@@ -5,13 +14,13 @@ class Heap {
   getLeftIndex(index) {
     return (result =
       2 * index + 1 > this.array.length
-        ? throws(new Error("argument over"))
+        ? throws(new Error('argument over'))
         : 2 * index + 1)
   }
   getRighttIndex(index) {
     return (result =
       2 * index + 2 > this.array.length
-        ? throws(new Error("argument over"))
+        ? throws(new Error('argument over'))
         : 2 * index + 2)
   }
 

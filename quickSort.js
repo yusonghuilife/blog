@@ -1,3 +1,17 @@
+/*
+ * @Author: yusonghu
+ * @Date: 2020-04-03 20:51:50
+ * @LastEditTime: 2020-05-24 15:29:46
+ * @LastEditors: yusonghu
+ * @Description:
+ * @FilePath: /blog/quickSort.js
+ */
+
+/**
+ * @description:
+ * @param {type}
+ * @return:
+ */
 const quickSort = (arr, first, end) => {
   if (first > end) return ''
   const pivot = arr[first] // 第一个作为排序基点
@@ -62,4 +76,30 @@ const quickSort = (arr, first, end) => {
     stack.push(i + 1)
     stack.push(end)
   }
+}
+
+const quickSort = (arr, first, end) => {
+  if (left < right) {
+    let mid = partition(arr, first, end)
+    quickSort(arr, mid + 1, right)
+    quickSort(arr, left, mid - 1)
+  }
+  return arr
+}
+
+const partition = (arr, left, right) => {
+  let i = left
+  let j = right + 1
+  let privot = arr[left]
+  while (i <= j) {
+    while (arr[++i] <= privot) {
+      if (i === j) break
+    }
+    while (arr[--j] >= privot) {
+      if (i === j) break
+    }
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  ;[arr[left], arr[i]] = [arr[i], arr[left]]
+  return i
 }
