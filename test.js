@@ -1,258 +1,174 @@
-function ajax(options) {
-  let { url, method = "get", async, data } = options
+/* eslint-disable no-unused-vars */
+const ajax = (url, method = 'get', timeout, async, data) => {
   const xhr = new XMLHttpRequest()
-
+  timeout && (xhr.timeout = timeout)
   return new Promise((resolve, reject) => {
-    xhr.onreadystatechange = function () {
+    xhr.ontimeout = () => reject?.(new Error('timeout'))
+
+    xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
-        if ((xhr.status > 200 && xhr.status < 300) || xhr.status === 304) {
-          resolve(xhr.responseText)
+        if (xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304)) {
+          resolve?.(xhr.responseText)
         } else {
-          reject(xhr.responseText)
+          reject(new Error(`${xhr.status}error`))
         }
       }
     }
 
-    xhr.onerror = (err) => reject(err)
+    xhr.onerror = err => reject(err)
 
-    // post params
-    let dataArr = []
-    Object.keys(data).forEach((el) => {
-      dataArr.push(`${encodeURIComponent(el)}=${encodeURIComponent(data[el])}`)
-    })
-
-    if (method === "get") {
-      url +=
-        url.indexOf("?") === -1
-          ? `?${dataArr.join("&")}`
-          : `${dataArr.join("&")}`
+    const paramArr = []
+    if (data) {
+      for (const key in data) {
+        paramArr.push(`${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+      }
     }
+
+    if (method === 'get') {
+      const index = url.indexOf('?')
+      if (index === -1) {
+        url += '?'
+      } else if (index !== url.length - 1) {
+        url += '&'
+      }
+      url += paramArr.join('&')
+    }
+
     xhr.open(method, url, async)
 
-    if (method === "post") {
-      xhr.send(dataArr.join("&"))
-    } else {
+    if (method === 'get') {
       xhr.send(null)
+    } else {
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      xhr.send(paramArr.join('&'))
     }
   })
 }
 
-function binarySearch(arr, target) {
-  let left = 0
-  let end = arr.length - 1
-  while (left < end) {
-    let mid = left + ((end - left) >> 1)
+const BFS = (root) => {
+  if (!root) return []
+  const stack = [root]
+  const BFSRes = []
+  while (stack.length > 0) {
+    const node = stack.shift()
+    node.children && stack.push(...node.children)
+    BFSRes.push(node)
+  }
+  return BFSRes
+}
 
-    if (arr[mid] === target) {
-      return mid
-    } else if (arr[mid] > target) {
-      end = mid - 1
-    } else {
+/**
+ * arr sorted
+ */
+const binarySearch = (arr, value) => {
+  let left = 0
+  let right = arr.length - 1
+  while (left <= right) {
+    const mid = Math.floor((right + left) / 2)
+    if (value < arr[mid]) {
+      right = mid - 1
+    } else if (value > arr[mid]) {
       left = mid + 1
+    } else {
+      return mid
     }
   }
   return -1
 }
 
-Function.prototype.bind = function (context = window, ...args1) {
-  const func = this
-  return function F(...args2) {
-    if (this instanceof F) {
-      return new func(...args1, ...args2)
-    }
-
-    return func.call(context, ...args1, ...args2)
+/**
+ * fun.bind(obj)
+ * return new function
+ */
+function bind (thisArgs, ...args) {
+  const key = Symbol('unIterable')
+  thisArgs[key] = this
+  return function (...args1) {
+    thisArgs[key](...args, ...args1)
   }
 }
 
-Function.prototype.call = function (context, ...args) {
-  const func = this
-  const fn = Symbol()
-  context[fn] = func
-  const result = context[fn](...args)
-  delete context[fn]
-  return result
-}
-
-// const curry = function (fn, args = []) {
-//   if (args.length === fn.length) {
-//     return fn(...args)
-//   } else {
-//     return function (...args1) {
-//       return curry(fn, [...args, ...args1])
-//     }
-//   }
-// }
-
-const curry = (fn, args = []) => (...args) =>
-  args.length === fn.length
-    ? fn(...args)
-    : (...args1) => curry(fn, [...args, ...args1])
-
-function debounce(fn, time) {
-  let timer
-  return function (...args) {
-    clearTimeout(timer)
-    timer = setTimeout(function () {
-      fn(...args)
-    }, time || 500)
-  }
-}
-
-function throttle(fn, time) {
-  let canRun = true
-  return function (...args) {
-    if (!canRun) return ""
-    canRun = false
-    setTimeout(function () {
-      fn(...args)
-      canRun = true
-    }, time || 500)
-  }
-}
-
-function deepClone(target, map = new WeakMap()) {
-  // const res = {}
-  if (typeof target === "object") {
-    const res = Array.isArray(target) ? [] : {}
-    if (map.get(target)) {
-      return map.get(target)
-    }
-    map.set(target, res)
-    for (let key in target) {
-      res[key] = deepClone(target[key], map)
-    }
-  } else {
-    return target
-  }
-}
-
-function DOM2JSON(node) {
-  const res = {}
-  res.tag = node.name
-  node.children = [...node.children].map((el) => DOM2JSON(el))
+/**
+ * fun.apply(obj, [])
+ */
+function apply (thisArgs, arr) {
+  const key = Symbol('unIterable')
+  thisArgs[key] = this
+  const res = thisArgs[key](...arr)
+  delete thisArgs[key]
   return res
 }
 
-class EventEmitter {
-  constructor() {
-    this._eventpool = {}
-  }
+/**
+ * fun.call(obj, args)
+ */
+function call (thisArgs, ...args) {
+  const key = Symbol('unIterable')
+  thisArgs[key] = this
+  const res = thisArgs[key](...args)
+  delete thisArgs[key]
+  return res
+}
 
-  on(ename, cb) {
-    this._eventpool[name]
-      ? this._eventpool[name].push(cb)
-      : (this._eventpool[name] = [cb])
-  }
+/**
+ * curry
+ * add(1, 2)(3)
+ */
+const add = (a, b) => a + b
 
-  emit(ename, ...args) {
-    this._eventpool[ename] &&
-      this._eventpool[ename].forEach((cb) => cb(...args))
-  }
-
-  off(ename, cb) {
-    this._eventpool[ename] &&
-      (this._eventpool[ename] = this._eventpool[ename].filter(
-        (fn) => fn !== cb
-      ))
-  }
-
-  once(ename, cb) {
-    this._eventpool[name] &&
-      this.on(ename, () => {
-        cb()
-        this.off(ename, cb)
-      })
+function curry (func) {
+  const allArgs = []
+  return function inner (...args1) {
+    allArgs.push(...args1)
+    return allArgs.length === func.length ? func(allArgs) : inner
   }
 }
 
-function flat(arr) {
-  arr.reduce((acc, cur) => {
-    return Array.isArray(cur) ? acc.concat(flat(cur)) : acc.concat(cur)
-  }, [])
-}
+/**
+ * 节流
+ * throttle 一段时间内执行一次
+ */
 
-function instanceOf(instance, constructor) {
-  while (instance) {
-    if (instance.prototype === constructor.prototype) return true
-    instance = Object.getPrototypeOf(instance)
-  }
-  return false
-}
-
-const jsonp = (url, data, cb, cbName) => {
-  let params = Object.keys(data)
-    .map((el) => `${el}=${data[el]}`)
-    .join("&")
-
-  url += url.indexOf("?") > -1 ? `&${params}` : `?${params}`
-
-  url += `cb=${cbName}`
-
-  const scr = document.createElement("script")
-  scr.src = url
-  body.appendChild(scr)
-
-  window[cbName] = function (res) {
-    cb(res)
-    body.removeChild(scr)
-  }
-}
-
-const pipe = (val) => {
-  const funList = []
-  const get = function (obj, funName) {
-    if (funName === "get") {
-      return funList.reduce((acc, fn) => {
-        return fn(acc)
-      }, val)
-    } else {
-      funList.push(window[funName])
-    }
-    return proxy
-  }
-  const proxy = new Proxy({}, { get })
-  return proxy
-}
-
-const quickSort = (arr, first, end) => {
-  if (first > end) return
-  const mid = arr[first] //
-  let i = first
-  let j = end
-  while (first <= end) {
-    while (arr[first] <= arr[mid] && first <= end) {
-      first++
-    }
-    while (arr[end] >= arr[mid] && first <= end) {
-      end++
-    }
-    ;[arr[first], arr[end]] = [arr[end], arr[first]]
-  }
-  ;[arr[i], arr[first]] = [arr[first], arr[i]]
-  quickSort(arr, i, first - 1)
-  quickSort(arr, first + 1, j)
-}
-
-function quickSort(arr, start, end) {
-  var stack = [],
-    left,
-    right
-  if (start < end) {
-    stack.push(end)
-    stack.push(start)
-    while (stack.length != 0) {
-      left = stack.pop()
-      right = stack.pop()
-      index = partition(arr, left, right)
-      if (left < index - 1) {
-        stack.push(index - 1)
-        stack.push(left)
-      }
-      if (right > index + 1) {
-        stack.push(right)
-        stack.push(index + 1)
-      }
+const throttle = (func, time = 500) => {
+  let canRun = true
+  return (...args) => {
+    // canRun = false;
+    if (canRun) {
+      canRun = false
+      setTimeout(() => {
+        func(...args)
+        canRun = true
+      }, time)
     }
   }
+}
+
+/**
+ * 防抖
+ * debounce
+ * 在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时
+ */
+
+const debounce = (func, time = 500) => {
+  const debounceTimer = null
+  return (...args) => {
+    clearTimeout(debounceTimer)
+    setTimeout(() => {
+      func(...args)
+    }, time)
+  }
+}
+
+/**
+ * clone
+ */
+const clone = () => {
+}
+
+/**
+ * DFS
+ */
+
+const DFS = () => {
+
 }

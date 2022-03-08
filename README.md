@@ -1,3 +1,3 @@
 ## blog
 
-code for bytedance interview online
+code for front-end interview
