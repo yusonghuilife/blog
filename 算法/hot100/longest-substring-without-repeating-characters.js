@@ -4,9 +4,9 @@
  * @return {number}
  */
 const lengthOfLongestSubstring = function (s) {
-  let maxSubStrLen = 0
-  let left = 0
-  const subStrMap = new Map()
+  let maxSubStrLen = 0;
+  let left = 0;
+  const subStrMap = new Map();
   for (let i = 0; i < s.length; i++) {
     /**
     1、首先，判断当前字符是否包含在map中，如果不包含，将该字符添加到map（字符，字符在数组下标）,
@@ -25,18 +25,18 @@ const lengthOfLongestSubstring = function (s) {
       因此此时新的 s.charAt(i) 已经进入到 当前最长的子段中！
       */
     if (subStrMap.has(s[i])) {
-      left = Math.max(left, subStrMap.get(s[i]) + 1)
+      left = Math.max(left, subStrMap.get(s[i]) + 1);
     }
-    subStrMap.set(s[i], i)
-    maxSubStrLen = Math.max(maxSubStrLen, i + 1 - left)
+    subStrMap.set(s[i], i);
+    maxSubStrLen = Math.max(maxSubStrLen, i + 1 - left);
   }
-  return maxSubStrLen
-}
+  return maxSubStrLen;
+};
 
-console.log(lengthOfLongestSubstring('aab')) // 2
-console.log(lengthOfLongestSubstring('abba')) // 2
-console.log(lengthOfLongestSubstring('cdd')) // 2
-console.log(lengthOfLongestSubstring('dvdf')) // 3
-console.log(lengthOfLongestSubstring('pwwkew')) // 3
-console.log(lengthOfLongestSubstring('abcabcbb')) // 3
-console.log(lengthOfLongestSubstring('ckilbkd')) // 5
+console.log(lengthOfLongestSubstring('aab')); // 2
+console.log(lengthOfLongestSubstring('abba')); // 2
+console.log(lengthOfLongestSubstring('cdd')); // 2
+console.log(lengthOfLongestSubstring('dvdf')); // 3
+console.log(lengthOfLongestSubstring('pwwkew')); // 3
+console.log(lengthOfLongestSubstring('abcabcbb')); // 3
+console.log(lengthOfLongestSubstring('ckilbkd')); // 5

@@ -5,12 +5,12 @@
  * @return {number[]}
  */
 const twoSum = function (nums, target) {
-  const dict = {}
+  const dict = {};
   for (let i = 0; i < nums.length; i++) {
     if (dict[target - nums[i]] !== undefined) {
-      return [i, dict[target - nums[i]]]
+      return [i, dict[target - nums[i]]];
     }
-    dict[nums[i]] = i
+    dict[nums[i]] = i;
   }
-  return [-1, -1]
-}
+  return [-1, -1];
+};
