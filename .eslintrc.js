@@ -20,6 +20,7 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    semi: [2, 'always']
+    semi: [2, 'always'],
+    'no-use-before-define': 'off'
   }
 };
