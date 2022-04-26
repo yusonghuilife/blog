@@ -1,27 +1,27 @@
 // 先右后左
-function preOrder(node) {
-  if (!node) return
-  const stack = [node]
+function preOrder (node) {
+  if (!node) return;
+  const stack = [node];
   while (stack.length !== 0) {
-    const tmp = stack.pop()
-    console.log(tmp) // 输出
-    if (tmp.right) stack.push(tmp.right)
-    if (tmp.left) stack.push(tmp.left)
+    const tmp = stack.pop();
+    console.log(tmp); // 输出
+    if (tmp.right) stack.push(tmp.right);
+    if (tmp.left) stack.push(tmp.left);
   }
 }
 
-//先把左边的，全部放进arr输出，再处理右边的
-function inOrder(node) {
-  const stack = []
+// 先把左边的，全部放进arr输出，再处理右边的
+function inOrder (node) {
+  const stack = [];
   while (true) {
     while (!node) {
-      stack.push(node)
-      node = node.left
+      stack.push(node);
+      node = node.left;
     }
-    if (stack.length === 0) break
-    const tmp = stack.pop()
-    console.log(tmp) // 打印
-    node = tmp.right
+    if (stack.length === 0) break;
+    const tmp = stack.pop();
+    console.log(tmp); // 打印
+    node = tmp.right;
   }
 }
 
@@ -38,18 +38,18 @@ function inOrder(node) {
 //   return res.reverse().toString()
 // }
 
-function posOrder(node) {
-  if (!node) return ""
-  const stack = [node]
+function posOrder (node) {
+  if (!node) return '';
+  const stack = [node];
   while (stack.length !== 0) {
-    const tmp = stack[stack.length - 1]
+    const tmp = stack[stack.length - 1];
     if (tmp.left && node !== tmp.left && node !== tmp.right) {
-      stack.push(tmp.left)
+      stack.push(tmp.left);
     } else if (tmp.right && node !== tmp.right) {
-      stack.push(tmp.right)
+      stack.push(tmp.right);
     } else {
-      console.log(stack.pop())
-      node = tmp // 防止回溯重复
+      console.log(stack.pop());
+      node = tmp; // 防止回溯重复
     }
   }
 }
