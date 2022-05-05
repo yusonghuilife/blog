@@ -1,15 +1,15 @@
-function binarySearch(arr, value) {
-  let left = 0
-  let right = arr.length - 1
+function binarySearch (arr, value) {
+  let left = 0;
+  let right = arr.length - 1;
   while (left <= right) {
-    let mid = left + ((right - left) >> 1)
+    const mid = left + ((right - left) >> 1);
     if (arr[mid] === value) {
-      return mid
+      return mid;
     } else if (arr[mid] > value) {
-      right = mid - 1
+      right = mid - 1;
     } else {
-      left = mid + 1
+      left = mid + 1;
     }
   }
-  return -1
+  return -1;
 }
